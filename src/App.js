@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-// ══════════════════════════════════════════════════════════
-//  CONFIGURACIÓN — reemplaza con tus credenciales reales
-// ══════════════════════════════════════════════════════════
+// eslint-disable-next-line no-unused-vars
 const CONFIG = {
   supabase: {
     url: "https://dbpqfplomejtkoxjpvrn.supabase.co",
@@ -242,6 +240,7 @@ export default function FormularioOrdenes() {
   }
 
   async function enviarWhatsApp(orden) {
+    // eslint-disable-next-line no-unused-vars
     const msg = encodeURIComponent(
       `📦 *Nueva Orden — Locales Feb 2026*\n` +
       `👤 Cliente: ${orden.nombre_cliente || "No especificado"}\n` +
