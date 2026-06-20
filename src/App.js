@@ -252,6 +252,8 @@ export default function FormularioOrdenes() {
       `👤 Ingresó: ${orden.quien_ingresa}\n` +
       `📝 ${orden.comentario_libre || "Sin comentarios"}`
     );
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${process.env.REACT_APP_WA_PHONE}&text=${msg}&apikey=${process.env.REACT_APP_WA_APIKEY}`;
+  await fetch(url);
   }
 
   async function handleSubmit() {
