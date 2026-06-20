@@ -3,12 +3,12 @@ import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 const CONFIG = {
   supabase: {
-    url: "process.env.REACT_APP_SUPABASE_URL",
-    anonKey: "process.env.REACT_APP_SUPABASE_KEY",
+    url: process.env.REACT_APP_SUPABASE_URL,
+    anonKey: process.env.REACT_APP_SUPABASE_KEY,
   },
   callmebot: {
-    phone: "process.env.REACT_APP_WA_PHONE",
-    apiKey: "process.env.REACT_APP_WA_APIKEY",
+    phone: process.env.REACT_APP_WA_PHONE,
+    apiKey: process.env.REACT_APP_WA_APIKEY,
   },
 };
 
@@ -222,7 +222,7 @@ export default function FormularioOrdenes() {
 
   async function guardarEnSupabase(orden) {
   
-    const res = await fetch(`${CONFIG.supabase.url}/rest/v1/ordenes`, {
+    const res = await fetch(`${CONFIG.supabase.url}/rest/v1/ordenes_locales`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
