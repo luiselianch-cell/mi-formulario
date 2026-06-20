@@ -238,23 +238,16 @@ export default function FormularioOrdenes() {
   }
 
   async function enviarWhatsApp(orden) {
-    // eslint-disable-next-line no-unused-vars
-    const msg = encodeURIComponent(
-      `📦 *Nueva Orden — Locales Feb 2026*\n` +
-      `👤 Cliente: ${orden.nombre_cliente || "No especificado"}\n` +
-      `📱 Contacto: ${orden.numero_contacto || "—"}\n` +
-      `🛍️ Artículos: ${orden.articulos}\n` +
-      `📍 ${orden.municipio} — ${orden.direccion_entrega}\n` +
-      `🕐 Hora límite: ${orden.hora_limite || "No especificada"}\n` +
-      `💰 Total: ${orden.total_pagar}\n` +
-      `💳 Pago: ${orden.forma_pago} | ${orden.tipo_comprobante}\n` +
-      `📲 Perfil: ${orden.perfil_salio_1}${orden.perfil_salio_2 ? " / " + orden.perfil_salio_2 : ""}\n` +
-      `👤 Ingresó: ${orden.quien_ingresa}\n` +
-      `📝 ${orden.comentario_libre || "Sin comentarios"}`
-    );
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${process.env.REACT_APP_WA_PHONE}&text=${msg}&apikey=${process.env.REACT_APP_WA_APIKEY}`;
-  await fetch(url);
-  }
+      await fetch("https://dbpqfplomejtkoxjpvrn.supabase.co/functions/v1/super-service", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      phone: process.env.REACT_APP_WA_PHONE,
+      apikey: process.env.REACT_APP_WA_APIKEY,
+      message: "Nueva Orden - Locales Feb 2026 | Cliente: " + (orden.nombre_cliente || "No especificado") + " | Articulos: " + orden.articulos + " | Total: " + orden.total_pagar + " | Municipio: " + orden.municipio + " | Pago: " + orden.forma_pago,
+    }),
+  });
+}
 
   async function handleSubmit() {
     if (!validate()) return;
