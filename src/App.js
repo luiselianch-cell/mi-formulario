@@ -244,7 +244,22 @@ export default function FormularioOrdenes() {
     body: JSON.stringify({
       phone: process.env.REACT_APP_WA_PHONE,
       apikey: process.env.REACT_APP_WA_APIKEY,
-      message: "Nueva Orden - Locales Feb 2026 | Cliente: " + (orden.nombre_cliente || "No especificado") + " | Articulos: " + orden.articulos + " | Total: " + orden.total_pagar + " | Municipio: " + orden.municipio + " | Pago: " + orden.forma_pago,
+      message: "Nueva Orden - Locales Feb 2026" +
+"%0ACliente: " + (orden.nombre_cliente || "No especificado") +
+"%0AContacto: " + (orden.numero_contacto || "-") +
+"%0AArticulos: " + orden.articulos +
+"%0AMunicipio: " + orden.municipio +
+"%0ADireccion: " + orden.direccion_entrega +
+"%0ARelacion entrega: " + orden.relacion_entrega +
+"%0AHora limite: " + (orden.hora_limite || "No especificada") +
+"%0ATotal: " + orden.total_pagar +
+"%0APago: " + orden.forma_pago +
+"%0AComprobante: " + orden.tipo_comprobante +
+"%0AComentario: " + (orden.comentario_predet || "Ninguno") +
+"%0APerfil 1: " + orden.perfil_salio_1 +
+"%0APerfil 2: " + orden.perfil_salio_2 +
+"%0AIngreso: " + orden.quien_ingresa +
+"%0ANotas: " + (orden.comentario_libre || "Sin notas")
     }),
   });
 }
