@@ -3,12 +3,12 @@ import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 const CONFIG = {
   supabase: {
-    url: "https://dbpqfplomejtkoxjpvrn.supabase.co",
-    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRicHFmcGxvbWVqdGtveGpwdnJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MTkyMjQsImV4cCI6MjA5NzM5NTIyNH0.pqjKI5kWzmUq8VC1MG71EhC6kB_Uv_pyEgzUggDX2hg",
+    url: "process.env.REACT_APP_SUPABASE_URL",
+    anonKey: "process.env.REACT_APP_SUPABASE_KEY",
   },
   callmebot: {
-    phone: "+34621331709",
-    apiKey: "7013101",
+    phone: "process.env.REACT_APP_WA_PHONE",
+    apiKey: "process.env.REACT_APP_WA_APIKEY",
   },
 };
 
