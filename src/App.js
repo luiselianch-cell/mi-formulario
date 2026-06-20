@@ -221,7 +221,7 @@ export default function FormularioOrdenes() {
   }
 
   async function guardarEnSupabase(orden) {
-    /* Descomentar con Supabase real:
+  
     const res = await fetch(`${CONFIG.supabase.url}/rest/v1/ordenes`, {
       method: "POST",
       headers: {
@@ -234,9 +234,7 @@ export default function FormularioOrdenes() {
     });
     if (!res.ok) throw new Error("Error al guardar en base de datos");
     return await res.json();
-    */
-    await new Promise((r) => setTimeout(r, 700));
-    return [{ id: Date.now(), ...orden }];
+    
   }
 
   async function enviarWhatsApp(orden) {
@@ -254,11 +252,6 @@ export default function FormularioOrdenes() {
       `👤 Ingresó: ${orden.quien_ingresa}\n` +
       `📝 ${orden.comentario_libre || "Sin comentarios"}`
     );
-    /* Descomentar con CallMeBot real:
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${CONFIG.callmebot.phone}&text=${msg}&apikey=${CONFIG.callmebot.apiKey}`;
-    await fetch(url);
-    */
-    await new Promise((r) => setTimeout(r, 400));
   }
 
   async function handleSubmit() {
@@ -561,7 +554,7 @@ export default function FormularioOrdenes() {
         )}
 
         <p style={{ color: "#1e3a5f", fontSize: "0.72rem", textAlign: "center", marginTop: "1.5rem" }}>
-          Modo demo activo — agrega tus credenciales en CONFIG para activar Supabase y WhatsApp
+          No Just a Brand x Tecno Gadget © 2026. Todos los derechos reservados.
         </p>
       </div>
     </div>
