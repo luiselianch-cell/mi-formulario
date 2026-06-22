@@ -303,29 +303,29 @@ export default function FormularioOrdenes() {
 }
 
   async function enviarWhatsApp(orden) {
-    await fetch("https://dbpqfplomejtkoxjpvrn.supabase.co/functions/v1/super-service", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        phone: process.env.REACT_APP_WA_PHONE,
-        apikey: process.env.REACT_APP_WA_APIKEY,
-        message: "Ficha #" + orden.numero_ficha +
-  "\n" + orden.fecha_orden +
-  "\n" + orden.articulos +
-  "\n" + (orden.nombre_cliente || "Sin nombre") +
-  "\n" + (orden.numero_contacto || "-") +
-  "\n" + orden.municipio + " — " + orden.direccion_entrega +
-  "\n" + orden.relacion_entrega +
-  "\n" + (orden.hora_limite || "Sin hora límite") +
-  "\n" + orden.total_pagar +
-  "\n" + orden.forma_pago +
-  "\n" + orden.tipo_comprobante +
-  "\n" + orden.perfil_salio_1 +
-  "\n" + orden.quien_ingresa +
-  "\n" + (orden.comentario_libre || "Sin notas"),
-          }),
-        });
-      }
+  await fetch("https://dbpqfplomejtkoxjpvrn.supabase.co/functions/v1/super-service", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      phone: process.env.REACT_APP_WA_PHONE,
+      apikey: process.env.REACT_APP_WA_APIKEY,
+      message: "Ficha #" + orden.numero_ficha +
+        "\n" + orden.fecha_orden +
+        "\n" + orden.articulos +
+        "\n" + (orden.nombre_cliente || "Sin nombre") +
+        "\n" + (orden.numero_contacto || "-") +
+        "\n" + orden.municipio + " - " + orden.direccion_entrega +
+        "\n" + orden.relacion_entrega +
+        "\n" + (orden.hora_limite || "Sin hora limite") +
+        "\n" + orden.total_pagar +
+        "\n" + orden.forma_pago +
+        "\n" + orden.tipo_comprobante +
+        "\n" + orden.perfil_salio_1 +
+        "\n" + orden.quien_ingresa +
+        "\n" + (orden.comentario_libre || "Sin notas"),
+    }),
+  });
+}
 
   async function handleSubmit() {
     if (!validate()) return;
