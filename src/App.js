@@ -3,6 +3,8 @@ import { useState } from "react";
 
 // eslint-disable-next-line no-unused-vars
 const mesActual = new Date().toLocaleString("es-ES", { month: "long", year: "numeric" });
+
+// eslint-disable-next-line no-unused-vars
 const CONFIG = {
   supabase: {
     url: process.env.REACT_APP_SUPABASE_URL,
