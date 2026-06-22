@@ -223,7 +223,7 @@ return (
                 borderBottom: "1px solid " + C.border,
               }}
             >
-              {o}
+              {opt}
             </div>
           ))}
         </div>
