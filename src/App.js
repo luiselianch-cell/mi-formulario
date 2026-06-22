@@ -206,7 +206,7 @@ return (
          maxHeight: 220,
          overflowY: "auto",
         }}>
-          
+
           {options.map((o) => (
             <div
               key={opt}
@@ -559,25 +559,25 @@ export default function FormularioOrdenes() {
               <input name="total_pagar" value={form.total_pagar} onChange={handleChange} disabled={isLoading} placeholder="$24.50" style={{ ...inputStyle(isLoading), ...err("total_pagar") }} />
             </Field>
             <Field label="Forma de pago" required>
-              <Select name="forma_pago" value={form.forma_pago} onChange={handleChange} disabled={isLoading} options={FORMAS_PAGO} />
+              <CustomSelect name="forma_pago" value={form.forma_pago} onChange={handleChange} disabled={isLoading} options={FORMAS_PAGO} />
               {errors.forma_pago && <div style={{ height: 1, background: C.error, marginTop: 2 }} />}
             </Field>
             <Field label="Tipo de comprobante" required>
-              <Select name="tipo_comprobante" value={form.tipo_comprobante} onChange={handleChange} disabled={isLoading} options={TIPOS_COMPROBANTE} />
+              <CustomSelect name="tipo_comprobante" value={form.tipo_comprobante} onChange={handleChange} disabled={isLoading} options={TIPOS_COMPROBANTE} />
               {errors.tipo_comprobante && <div style={{ height: 1, background: C.error, marginTop: 2 }} />}
             </Field>
             <Field label="Comentarios predeterminados (no obligatorio)">
-              <Select name="comentario_predet" value={form.comentario_predet} onChange={handleChange} disabled={isLoading} options={COMENTARIOS_PREDET} placeholder="Sin comentario" />
+              <CustomSelect name="comentario_predet" value={form.comentario_predet} onChange={handleChange} disabled={isLoading} options={COMENTARIOS_PREDET} placeholder="Sin comentario" />
             </Field>
           </Section>
 
           <Section title="Origen de la orden">
             <Field label="Perfil donde salió la orden" required>
-              <Select name="perfil_salio_1" value={form.perfil_salio_1} onChange={handleChange} disabled={isLoading} options={PERFILES} />
+              <CustomSelect name="perfil_salio_1" value={form.perfil_salio_1} onChange={handleChange} disabled={isLoading} options={PERFILES} />
               {errors.perfil_salio_1 && <div style={{ height: 1, background: C.error, marginTop: 2 }} />}
             </Field>
             <Field label="¿Quién ingresa la orden?" required>
-              <Select name="quien_ingresa" value={form.quien_ingresa} onChange={handleChange} disabled={isLoading} options={QUIEN_INGRESA} />
+              <CustomSelect name="quien_ingresa" value={form.quien_ingresa} onChange={handleChange} disabled={isLoading} options={QUIEN_INGRESA} />
               {errors.quien_ingresa && <div style={{ height: 1, background: C.error, marginTop: 2 }} />}
             </Field>
             <Field label="Comentario libre">
