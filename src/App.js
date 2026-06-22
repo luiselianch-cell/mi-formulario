@@ -2,6 +2,7 @@ import { useState } from "react";
 
 
 // eslint-disable-next-line no-unused-vars
+const mesActual = new Date().toLocaleString("es-ES", { month: "long", year: "numeric" });
 const CONFIG = {
   supabase: {
     url: process.env.REACT_APP_SUPABASE_URL,
@@ -12,8 +13,6 @@ const CONFIG = {
     apiKey: process.env.REACT_APP_WA_APIKEY,
   },
 };
-
-const mesActual = new Date().toLocaleString("es-ES", { month: "long", year: "numeric" });
 
 // ══ Opciones de selects ══════════════════════════════════
 const MUNICIPIOS = [
