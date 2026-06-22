@@ -601,10 +601,10 @@ export default function FormularioOrdenes() {
               disabled={isLoading}
               style={{
                 width: "100%", padding: "0.85rem",
-                background: isLoading ? C.border : "linear-gradient(90deg," + C.primary + "," + C.accent + ")",
+                background: isLoading ? C.border : C.primary,
                 color: isLoading ? C.textMuted : "#ffffff",
                 border: "none", borderRadius: "0.55rem",
-                fontWeight: 800, fontSize: "0.95rem",
+                fontWeight: 600, fontSize: "0.95rem",
                 cursor: isLoading ? "default" : "pointer",
                 letterSpacing: "0.02em", transition: "opacity 0.15s",
                 boxShadow: isLoading ? "none" : "0 4px 14px rgba(0,51,102,0.3)",
