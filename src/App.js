@@ -165,7 +165,7 @@ function Select({ name, value, onChange, disabled, options, placeholder = "Selec
   );
 }
 
-fuction CustomSelect({ name, value, onChange, disabled, options, placeholder = "Selecciona…", disabled }) {
+function CustomSelect({ name, value, onChange, disabled, options, placeholder = "Selecciona…", disabled }) {
   const [open, setOpen] = useState(false);
 return (
     <div style={{ position: "relative" }}>
