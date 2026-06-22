@@ -165,6 +165,73 @@ function Select({ name, value, onChange, disabled, options, placeholder = "Selec
   );
 }
 
+fuction CustomSelect({ name, value, onChange, disabled, options, placeholder = "Selecciona…", disabled }) {
+  const [open, setOpen] = useState(false);
+return (
+    <div style={{ position: "relative" }}>
+      {/*Campo visible*/}
+      <div
+        onClick={() => !disabled && setOpen( !open )}
+        style={{
+          ...inputStyle(disabled),
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          usersSelect: "none",
+        }}
+      >
+        <span style={{ color: value ? C.text : C.textMuted }}>
+          {value || placeholder}
+        </span>
+        <span style={{ color: C.accent }}>
+          {open ? "▲" : "▼"}
+        </span>
+      </div>
+
+      {/*Lista desplegable*/}
+      {open && (
+        <div style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+         right: 0,
+         background: "rgba(255, 255, 255, 0.85)",
+         backdropFilter: "blur(10px)",
+         WebkitBackdropFilter: "blur(10px)",
+         border: "1px solid rgba(0, 51, 102, 0.2)",
+         borderRadius: "0.45rem",
+         boxShadow: "0 8px 32px rgba(0,51,102,0.2)",
+         zIndex: 999,
+         maxHeight: 220,
+         overflowY: "auto",
+        }}>
+          
+          {options.map((o) => (
+            <div
+              key={opt}
+              onClick={() => {
+                onChange({ target: { name, value: o } });
+                setOpen(false);
+              }}
+              style={{
+                padding: "0.7rem 0.85rem",
+                cursor: "pointer",
+                color: value === opt ? C.accent : C.text,
+                background: value === opt ? C.accentLight : "transparent",
+                fontweight: value === opt ? 600 : 400,              
+                borderBottom: "1px solid " + C.border,
+              }}
+            >
+              {o}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function RadioGroup({ name, value, onChange, options, disabled }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
