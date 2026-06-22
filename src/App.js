@@ -207,11 +207,11 @@ return (
          overflowY: "auto",
         }}>
 
-          {options.map((o) => (
+          {options.map((opt) => (
             <div
               key={opt}
               onClick={() => {
-                onChange({ target: { name, value: o } });
+                onChange({ target: { name, value: opt } });
                 setOpen(false);
               }}
               style={{
