@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+const mesActual = new Date().toLocaleString("es-ES", { month: "long", year: "numeric" });
 // eslint-disable-next-line no-unused-vars
 const CONFIG = {
   supabase: {
@@ -248,19 +249,58 @@ export default function FormularioOrdenes() {
   }
 
   async function guardarEnSupabase(orden) {
-    const res = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/ordenes_locales", {
+  const hoy = new Date().toISOString().split("T")[0];
+
+  // Obtener el contador de hoy
+  const resContador = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + hoy, {
+    headers: {
+      apikey: process.env.REACT_APP_SUPABASE_KEY,
+      Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
+    },
+  });
+  const contadores = await resContador.json();
+
+  let numeroFicha = 1;
+
+  if (contadores.length === 0) {
+    // Primera orden del día — crear contador
+    await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         apikey: process.env.REACT_APP_SUPABASE_KEY,
         Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
-        Prefer: "return=representation",
       },
-      body: JSON.stringify(orden),
+      body: JSON.stringify({ fecha: hoy, ultimo_numero: 1 }),
     });
-    if (!res.ok) throw new Error("Error al guardar en base de datos");
-    return await res.json();
+  } else {
+    // Ya hay órdenes hoy — sumar 1
+    numeroFicha = contadores[0].ultimo_numero + 1;
+    await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + hoy, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: process.env.REACT_APP_SUPABASE_KEY,
+        Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
+      },
+      body: JSON.stringify({ ultimo_numero: numeroFicha }),
+    });
   }
+
+  // Guardar orden con número de ficha
+  const res = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/ordenes_locales", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: process.env.REACT_APP_SUPABASE_KEY,
+      Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
+      Prefer: "return=representation",
+    },
+    body: JSON.stringify({ ...orden, numero_ficha: numeroFicha }),
+  });
+  if (!res.ok) throw new Error("Error al guardar en base de datos");
+  return await res.json();
+}
 
   async function enviarWhatsApp(orden) {
     await fetch("https://dbpqfplomejtkoxjpvrn.supabase.co/functions/v1/super-service", {
@@ -269,22 +309,23 @@ export default function FormularioOrdenes() {
       body: JSON.stringify({
         phone: process.env.REACT_APP_WA_PHONE,
         apikey: process.env.REACT_APP_WA_APIKEY,
-        message: "Nueva Orden - Locales Feb 2026" +
-          "\nCliente: " + (orden.nombre_cliente || "No especificado") +
-          "\nContacto: " + (orden.numero_contacto || "-") +
-          "\nArticulos: " + orden.articulos +
-          "\nMunicipio: " + orden.municipio +
-          "\nDireccion: " + orden.direccion_entrega +
-          "\nHora limite: " + (orden.hora_limite || "No especificada") +
-          "\nTotal: " + orden.total_pagar +
-          "\nPago: " + orden.forma_pago +
-          "\nComprobante: " + orden.tipo_comprobante +
-          "\nPerfil: " + orden.perfil_salio_1 +
-          "\nIngreso: " + orden.quien_ingresa +
-          "\nNotas: " + (orden.comentario_libre || "Sin notas"),
-      }),
-    });
-  }
+        message: "Ficha #" + orden.numero_ficha +
+  "\n" + orden.fecha_orden +
+  "\n" + orden.articulos +
+  "\n" + (orden.nombre_cliente || "Sin nombre") +
+  "\n" + (orden.numero_contacto || "-") +
+  "\n" + orden.municipio + " — " + orden.direccion_entrega +
+  "\n" + orden.relacion_entrega +
+  "\n" + (orden.hora_limite || "Sin hora límite") +
+  "\n" + orden.total_pagar +
+  "\n" + orden.forma_pago +
+  "\n" + orden.tipo_comprobante +
+  "\n" + orden.perfil_salio_1 +
+  "\n" + orden.quien_ingresa +
+  "\n" + (orden.comentario_libre || "Sin notas"),
+          }),
+        });
+      }
 
   async function handleSubmit() {
     if (!validate()) return;
@@ -308,7 +349,7 @@ export default function FormularioOrdenes() {
     <div style={{
       minHeight: "100vh",
       background: C.bg,
-      fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
+      fontFamily: "'Roboto', -apple-system, sans-serif",
       padding: "2rem 1rem 4rem",
     }}>
       <div style={{ maxWidth: 560, margin: "0 auto" }}>
@@ -397,7 +438,7 @@ export default function FormularioOrdenes() {
                 value={form.articulos}
                 onChange={handleChange}
                 disabled={isLoading}
-                placeholder="Ej: 2x Modelo-A001, 1x Modelo-B220…"
+                placeholder="Tu respuesta..."
                 style={{ ...inputStyle(isLoading), ...err("articulos"), resize: "vertical", minHeight: 72 }}
                 autoComplete="off"
               />
@@ -551,7 +592,7 @@ export default function FormularioOrdenes() {
   fontSize: "0.75rem", 
   marginTop: "2rem" 
 }}>
-  Con tecnologia de No Just a Forms, Desarrollado por Elian Chevez para Tecno Gadget.
+  Con tecnologia de No Just a Forms.
 </p>
     </div>
   );
