@@ -185,7 +185,7 @@ return (
           {value || placeholder}
         </span>
         <span style={{ color: C.accent }}>
-          {open ? "▲" : "▼"}
+          {open ? "⌃" : "⌄"}
         </span>
       </div>
 
@@ -526,7 +526,7 @@ export default function FormularioOrdenes() {
 
           <Section title="Entrega">
             <Field label="Municipio de entrega" required>
-              <Select name="municipio" value={form.municipio} onChange={handleChange} disabled={isLoading} options={MUNICIPIOS} />
+              <CustomSelect name="municipio" value={form.municipio} onChange={handleChange} disabled={isLoading} options={MUNICIPIOS} />
               {errors.municipio && <div style={{ height: 1, background: C.error, marginTop: 2, borderRadius: 1 }} />}
             </Field>
 
@@ -550,7 +550,7 @@ export default function FormularioOrdenes() {
             </Field>
 
             <Field label="Hora límite para completar entrega" hint="Es obligatorio preguntar al cliente a qué hora es lo más tarde que puede recibir.">
-              <Select name="hora_limite" value={form.hora_limite} onChange={handleChange} disabled={isLoading} options={HORAS_LIMITE} placeholder="Selecciona hora…" />
+              <CustomSelect name="hora_limite" value={form.hora_limite} onChange={handleChange} disabled={isLoading} options={HORAS_LIMITE} placeholder="Selecciona hora…" />
             </Field>
           </Section>
 
