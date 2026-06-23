@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 // eslint-disable-next-line no-unused-vars
 const mesActual = new Date().toLocaleString("es-ES", { month: "long", year: "numeric" });
 
@@ -292,6 +291,7 @@ function Section({ title, children }) {
     </div>
   );
 }
+
 
 export default function FormularioOrdenes() {
   const [form, setForm] = useState(initialForm);
