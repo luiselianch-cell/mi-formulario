@@ -441,14 +441,14 @@ export default function FormularioOrdenes() {
             padding: "0.3rem 0.9rem",
             borderRadius: "2rem",
             marginBottom: "0.75rem",
-          }}>Tecno Gadget · Locales </div>
+          }}>Tecno Gadget · Locales "+ mesActual" </div>
           <h1 style={{
             fontSize: "1.8rem",
             fontWeight: 800,
             color: C.primary,
             margin: 0,
             lineHeight: 1.15,
-          }}>Registro de Orden</h1>
+          }}>Ordenes Locales</h1>
           <p style={{ color: C.textMuted, fontSize: "0.82rem", marginTop: "0.35rem", marginBottom: 0 }}>
             Los campos con <span style={{ color: C.error }}>*</span> son obligatorios.
           </p>
