@@ -320,10 +320,16 @@ export default function FormularioOrdenes() {
   }
 
   async function guardarEnSupabase(orden) {
-  const hoy = new Date().toISOString().split("T")[0];
+  const today = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return year + "-" + month + "-" + day;
+};
 
   // Obtener el contador de hoy
-  const resContador = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + hoy, {
+  const resContador = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + today(), {
     headers: {
       apikey: process.env.REACT_APP_SUPABASE_KEY,
       Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
