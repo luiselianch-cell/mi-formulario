@@ -441,7 +441,7 @@ export default function FormularioOrdenes() {
             padding: "0.3rem 0.9rem",
             borderRadius: "2rem",
             marginBottom: "0.75rem",
-          }}>Tecno Gadget · Locales "+ mesActual" </div>
+          }}>{"Tecno Gadget · Locales " + mesActual} </div>
           <h1 style={{
             fontSize: "1.8rem",
             fontWeight: 800,
