@@ -374,6 +374,9 @@ export default function FormularioOrdenes() {
 }
 
   async function enviarWhatsApp(orden) {
+    console.log ("Phone:" , process.env.REACT_APP_WA_PHONE);
+    console.log ("APIKEY:" , process.env.REACT_APP_WA_APIKEY);
+    console.log ("Numero Ficha", orden.numero_ficha);
   await fetch("https://dbpqfplomejtkoxjpvrn.supabase.co/functions/v1/super-service", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -438,7 +441,7 @@ export default function FormularioOrdenes() {
             padding: "0.3rem 0.9rem",
             borderRadius: "2rem",
             marginBottom: "0.75rem",
-          }}>Tecno Gadget · Locales 2026</div>
+          }}>Tecno Gadget · Locales </div>
           <h1 style={{
             fontSize: "1.8rem",
             fontWeight: 800,
@@ -448,7 +451,6 @@ export default function FormularioOrdenes() {
           }}>Registro de Orden</h1>
           <p style={{ color: C.textMuted, fontSize: "0.82rem", marginTop: "0.35rem", marginBottom: 0 }}>
             Los campos con <span style={{ color: C.error }}>*</span> son obligatorios.
-            Al guardar se enviará notificación por WhatsApp.
           </p>
         </div>
 
@@ -460,7 +462,7 @@ export default function FormularioOrdenes() {
             color: C.success, fontSize: "0.88rem", marginBottom: "1.25rem",
             display: "flex", alignItems: "center", gap: "0.5rem",
           }}>
-            ✅ Orden guardada y notificación enviada por WhatsApp.
+            ✅ Orden guardada.
           </div>
         )}
         {status === "error" && (
@@ -469,7 +471,7 @@ export default function FormularioOrdenes() {
             borderRadius: "0.5rem", padding: "0.8rem 1rem",
             color: C.error, fontSize: "0.88rem", marginBottom: "1.25rem",
           }}>
-            ⚠️ Ocurrió un error. Revisa la consola o las credenciales.
+            ⚠️ Ocurrió un error.
           </div>
         )}
         {Object.keys(errors).length > 0 && (
