@@ -348,12 +348,12 @@ export default function FormularioOrdenes() {
         apikey: process.env.REACT_APP_SUPABASE_KEY,
         Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
       },
-      body: JSON.stringify({ fecha: hoy, ultimo_numero: 1 }),
+      body: JSON.stringify({ fecha: today(), ultimo_numero: 1 }),
     });
   } else {
     // Ya hay órdenes hoy — sumar 1
     numeroFicha = contadores[0].ultimo_numero + 1;
-    await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + hoy, {
+    await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + today(), {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
