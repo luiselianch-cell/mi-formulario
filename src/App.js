@@ -407,7 +407,7 @@ export default function FormularioOrdenes() {
     try {
       const orden = { ...form, creado_en: new Date().toISOString() };
       const [saved] = await guardarEnSupabase(orden);
-      await enviarWhatsApp(orden);
+      await enviarWhatsApp({ ...orden, numero_ficha: saved.numero_ficha });
       setHistorial((p) => [saved, ...p].slice(0, 6));
       setForm({ ...initialForm, fecha_orden: today() });
       setStatus("success");
