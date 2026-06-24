@@ -364,6 +364,13 @@ export default function FormularioOrdenes() {
     });
   }
 
+  // Construir número de ficha con formato LOC-YYMMDD-001
+const fecha = String(new Date().getFullYear()).slice(2) +
+  String(new Date().getMonth() + 1).padStart(2, "0") +
+  String(new Date().getDate()).padStart(2, "0");
+
+const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3, "0");
+
   // Guardar orden con número de ficha
   const res = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/ordenes_locales", {
     method: "POST",
@@ -373,7 +380,7 @@ export default function FormularioOrdenes() {
       Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
       Prefer: "return=representation",
     },
-    body: JSON.stringify({ ...orden, numero_ficha: numeroFicha }),
+    body: JSON.stringify({ ...orden, numero_ficha: numeroFichaFormato }),
   });
   if (!res.ok) throw new Error("Error al guardar en base de datos");
   return await res.json();
@@ -389,7 +396,7 @@ export default function FormularioOrdenes() {
     body: JSON.stringify({
       phone: process.env.REACT_APP_WA_PHONE,
       apikey: process.env.REACT_APP_WA_APIKEY,
-      message: "Ficha #" + orden.numero_ficha +
+      message: "Orden" + orden.numero_ficha +
         "\n" + orden.fecha_orden +
         "\n" + orden.articulos +
         "\n" + (orden.nombre_cliente || "Sin nombre") +
