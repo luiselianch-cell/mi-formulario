@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 // eslint-disable-next-line no-unused-vars
 const mesActual = new Date().toLocaleString("es-ES", { month: "long", year: "numeric" });
@@ -131,7 +132,7 @@ const inputStyle = (disabled) => ({
   fontSize: "0.93rem",
   outline: "none",
   boxSizing: "border-box",
-  fontFamily: "inherit",
+  fontFamily: "Inter",
 });
 
 function Input({ name, value, onChange, disabled, placeholder, type = "text" }) {
@@ -184,9 +185,7 @@ return (
         <span style={{ color: value ? C.text : C.textMuted }}>
           {value || placeholder}
         </span>
-        <span style={{ color: C.accent }}>
-          {open ? "⌃" : "⌄"}
-        </span>
+        {open ? <ChevronUp size={16} color={C.accent} /> : <ChevronDown size={16} color={C.accent} />}
       </div>
 
       {/*Lista desplegable*/}
@@ -294,7 +293,10 @@ function Section({ title, children }) {
 
 
 export default function FormularioOrdenes() {
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] = useState(() => {
+  const saved = localStorage.getItem("borrador_local");
+  return saved ? JSON.parse(saved) : initialForm;
+});
   const [status, setStatus] = useState("idle");
   const [errors, setErrors] = useState({});
   const [historial, setHistorial] = useState([]);
@@ -302,8 +304,12 @@ export default function FormularioOrdenes() {
   const isLoading = status === "loading";
 
   function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((p) => ({ ...p, [name]: value }));
+  const { name, value } = e.target;
+  setForm(p => {
+    const nuevo = { ...p, [name]: value };
+    localStorage.setItem("borrador_local", JSON.stringify(nuevo));
+    return nuevo;
+  });
     if (errors[name]) setErrors((p) => ({ ...p, [name]: false }));
   }
 
@@ -422,6 +428,7 @@ const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3
       const [saved] = await guardarEnSupabase(orden);
       await enviarWhatsApp({ ...orden, numero_ficha: saved.numero_ficha });
       setHistorial((p) => [saved, ...p].slice(0, 6));
+      localStorage.removeItem("borrador_local");
       setForm({ ...initialForm, fecha_orden: today() });
       setStatus("success");
       setTimeout(() => setStatus("idle"), 4000);
@@ -436,7 +443,7 @@ const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3
     <div style={{
       minHeight: "100vh",
       background: C.bg,
-      fontFamily: "'DM Sans', -apple-system, sans-serif",
+      fontFamily: "'Inter', -apple-system, sans-serif",
       padding: "2rem 1rem 4rem",
     }}>
       <div style={{ maxWidth: 560, margin: "0 auto" }}>
