@@ -132,7 +132,7 @@ const inputStyle = (disabled) => ({
   fontSize: "0.93rem",
   outline: "none",
   boxSizing: "border-box",
-  fontFamily: "Inter",
+  fontFamily: "Inherit",
 });
 
 function Input({ name, value, onChange, disabled, placeholder, type = "text" }) {
@@ -443,7 +443,7 @@ const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3
     <div style={{
       minHeight: "100vh",
       background: C.bg,
-      fontFamily: "'Inter', -apple-system, sans-serif",
+      fontFamily: "'Inter', sans-serif",
       padding: "2rem 1rem 4rem",
     }}>
       <div style={{ maxWidth: 560, margin: "0 auto" }}>
