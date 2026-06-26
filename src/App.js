@@ -393,9 +393,6 @@ const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3
 }
 
   async function enviarWhatsApp(orden) {
-    console.log ("Phone:" , process.env.REACT_APP_WA_PHONE);
-    console.log ("APIKEY:" , process.env.REACT_APP_WA_APIKEY);
-    console.log ("Numero Ficha", orden.numero_ficha);
   await fetch("https://dbpqfplomejtkoxjpvrn.supabase.co/functions/v1/super-service", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
