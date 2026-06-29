@@ -49,7 +49,12 @@ const COMENTARIOS_PREDET = ["Contactar al cliente con anticipación para coordin
 const PERFILES = ["WhatsApp Principal", "Inbox Pagina FB", "WhatsApp Negro", "P. Personal Yanci", "P. Personal Sarai Eunice", "P. Personal Caleb", "P. Personal Kevin", "P. Personal Maressa", "P. Personal Marisol", "Perfil Andrea Marketplace", "Perfil Jessica Marketplace", "WhatsApp Del Jefazo Calen", "Instagram", "Cliente ordeno por llamada", "Pedido Pagina web Tecno Gadger", "Otro WhatsApp"];
 const QUIEN_INGRESA = ["Tecno Gadget - Fer", "Tecno Gadget - Jefferson", "Tecno Gadget - Wendy", "Tecno Gadget - Liss", "Tecno Gadget - Isa", "Tecno Gadget - Josue", "Yanci (Vend)", "Sara Eunice (Vend)", "Kevin (Vend)", "Maressa (Vend)", "Marisol (Vend)", "Herbert (Vend)", "Caleb (Venta Propia)", "Pedido de Pagina Web"];
 
-const today = () => new Date().toISOString().split("T")[0];
+const today = () => {
+  const d = new Date();
+  return d.getFullYear() + "-" + 
+    String(d.getMonth() + 1).padStart(2, "0") + "-" + 
+    String(d.getDate()).padStart(2, "0");
+};
 
 const initialForm = {
   fecha_orden: today(),
