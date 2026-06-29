@@ -322,7 +322,7 @@ export default function FormularioOrdenes() {
     const required = [
       "fecha_orden", "articulos", "municipio", "direccion_entrega",
       "relacion_entrega", "total_pagar", "forma_pago",
-      "tipo_comprobante", "perfil_salio_1", "quien_ingresa",
+      "tipo_comprobante", "perfil_salio_1", "quien_ingresa", "numero_contacto",
     ];
     const errs = {};
     required.forEach((k) => { if (!form[k]) errs[k] = true; });
