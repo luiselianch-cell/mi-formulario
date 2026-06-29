@@ -544,7 +544,7 @@ const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3
             <Field label="Nombre del cliente">
               <Input name="nombre_cliente" value={form.nombre_cliente} onChange={handleChange} disabled={isLoading} placeholder="Nombre completo" />
             </Field>
-            <Field label="Número de contacto" hint="Ingresar todos los números juntos. Ejemplo: 71002233">
+            <Field label="Número de contacto" required hint="Ingresar todos los números juntos. Ejemplo: 71002233">
               <Input name="numero_contacto" value={form.numero_contacto} onChange={handleChange} disabled={isLoading} placeholder="71002233" type="tel" />
             </Field>
           </Section>
