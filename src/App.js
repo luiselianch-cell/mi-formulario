@@ -332,55 +332,38 @@ export default function FormularioOrdenes() {
 
   async function guardarEnSupabase(orden) {
   const today = () => {
-  const d = new Date();
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return year + "-" + month + "-" + day;
-};
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return year + "-" + month + "-" + day;
+  };
 
-  // Obtener el contador de hoy
-  const resContador = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + today(), {
-    headers: {
-      apikey: process.env.REACT_APP_SUPABASE_KEY,
-      Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
-    },
-  });
-  const contadores = await resContador.json();
-
-  let numeroFicha = 1;
-
-  if (contadores.length === 0) {
-    // Primera orden del día — crear contador
-    await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios", {
-      method: "POST",
+  // Consultar la última ficha registrada (sin filtrar por fecha — número acumulado global)
+  const resUltimo = await fetch(
+    process.env.REACT_APP_SUPABASE_URL + "/rest/v1/ordenes_locales?select=numero_ficha&order=id.desc&limit=1",
+    {
       headers: {
-        "Content-Type": "application/json",
         apikey: process.env.REACT_APP_SUPABASE_KEY,
         Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
       },
-      body: JSON.stringify({ fecha: today(), ultimo_numero: 1 }),
-    });
-  } else {
-    // Ya hay órdenes hoy — sumar 1
-    numeroFicha = contadores[0].ultimo_numero + 1;
-    await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/contadores_diarios?fecha=eq." + today(), {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: process.env.REACT_APP_SUPABASE_KEY,
-        Authorization: "Bearer " + process.env.REACT_APP_SUPABASE_KEY,
-      },
-      body: JSON.stringify({ ultimo_numero: numeroFicha }),
-    });
+    }
+  );
+  const dataUltimo = await resUltimo.json();
+
+  let numero = 1;
+  if (dataUltimo.length > 0 && dataUltimo[0].numero_ficha) {
+    const partes = dataUltimo[0].numero_ficha.split("-");
+    const ultimoNumero = parseInt(partes[partes.length - 1]) || 0;
+    numero = ultimoNumero + 1;
   }
 
   // Construir número de ficha con formato LOC-YYMMDD-001
-const fecha = String(new Date().getFullYear()).slice(2) +
-  String(new Date().getMonth() + 1).padStart(2, "0") +
-  String(new Date().getDate()).padStart(2, "0");
+  const fecha = String(new Date().getFullYear()).slice(2) +
+    String(new Date().getMonth() + 1).padStart(2, "0") +
+    String(new Date().getDate()).padStart(2, "0");
 
-const numeroFichaFormato = "LOC-" + fecha + "-" + String(numeroFicha).padStart(3, "0");
+  const numeroFichaFormato = "LOC-" + fecha + "-" + String(numero).padStart(3, "0");
 
   // Guardar orden con número de ficha
   const res = await fetch(process.env.REACT_APP_SUPABASE_URL + "/rest/v1/ordenes_locales", {
